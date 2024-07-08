@@ -1,7 +1,49 @@
 ﻿@page "/"
 
-<PageTitle>Home</PageTitle>
+@using SearchPlaceApp.Services;
+@using SearchPlaceApp.Models;
 
-<h1>Hello, world!</h1>
+@inject PlaceService PlaceService
 
-Welcome to your new app.
+<h3>Search Places</h3>
+
+<input @bind="searchCriteria" />
+<button @onclick="Search">Search</button>
+
+@if (places != null)
+{
+    <h4>Search Results:</h4>
+    <ul>
+        @foreach (var place in places)
+        {
+            <li>
+                <strong>@place.MainText</strong><br />
+                @place.SecondaryText<br />
+                <button @onclick="() => ShowDetails(place.Id)">Show Details</button>
+            </li>
+        }
+    </ul>
+}
+
+@if (isLoading)
+{
+    <p>Loading...</p>
+}
+
+@code {
+    private string searchCriteria;
+    private List<Place> places;
+    private bool isLoading;
+
+    private async Task Search()
+    {
+        isLoading = true;
+        places = await PlaceService.SearchPlacesAsync(searchCriteria);
+        isLoading = false;
+    }
+
+    private void ShowDetails(string id)
+    {
+        NavigationManager.NavigateTo($"/placedetails/{id}");
+    }
+}

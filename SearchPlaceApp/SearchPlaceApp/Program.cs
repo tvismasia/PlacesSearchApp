@@ -1,11 +1,15 @@
 using SearchPlaceApp.Client.Pages;
 using SearchPlaceApp.Components;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
+
+builder.Services.AddHttpClient("KerridgeApi", client => client.BaseAddress = new Uri(builder.Configuration["KerridgeApi:BaseUrl"]))
+                .AddHttpMessageHandler<AuthorizationMessageHandler>();
 
 var app = builder.Build();
 

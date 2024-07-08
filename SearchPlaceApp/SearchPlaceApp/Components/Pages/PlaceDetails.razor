@@ -1,0 +1,50 @@
+﻿@page "/placedetails/{Id}"
+
+@using SearchPlaceApp.Services;
+@using SearchPlaceApp.Models;
+
+@inject PlaceService PlaceService
+
+<h3>Place Details</h3>
+
+@if (placeDetail != null)
+{
+    <dl>
+        <dt>Name:</dt>
+        <dd>@placeDetail.Name</dd>
+
+        <dt>Formatted Address:</dt>
+        <dd>@placeDetail.FormattedAddress</dd>
+
+        <dt>Vicinity:</dt>
+        <dd>@placeDetail.Vicinity</dd>
+
+        <dt>URL:</dt>
+        <dd>@placeDetail.Url</dd>
+
+        <dt>Longitude:</dt>
+        <dd>@placeDetail.Longitude</dd>
+
+        <dt>Latitude:</dt>
+        <dd>@placeDetail.Latitude</dd>
+
+        <dt>Utc Offset:</dt>
+        <dd>@placeDetail.UtcOffset</dd>
+    </dl>
+}
+else
+{
+    <p>Loading...</p>
+}
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+
+    private PlaceDetail placeDetail;
+
+    protected override async Task OnInitializedAsync()
+    {
+        placeDetail = await PlaceService.GetPlaceDetailAsync(Id);
+    }
+}
