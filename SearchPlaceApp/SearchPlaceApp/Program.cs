@@ -1,5 +1,8 @@
 using SearchPlaceApp.Client.Pages;
 using SearchPlaceApp.Components;
+using Microsoft.Extensions.Http;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+;
 
 
 var builder = WebApplication.CreateBuilder(args);
