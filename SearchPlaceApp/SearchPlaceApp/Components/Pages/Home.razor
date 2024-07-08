@@ -4,6 +4,7 @@
 @using SearchPlaceApp.Models;
 
 @inject PlaceService PlaceService
+@inject NavigationManager NavManager
 
 <h3>Search Places</h3>
 
@@ -44,6 +45,6 @@
 
     private void ShowDetails(string id)
     {
-        NavigationManager.NavigateTo($"/placedetails/{id}");
+        NavManager.NavigateTo($"/placedetails/{id}");
     }
 }
